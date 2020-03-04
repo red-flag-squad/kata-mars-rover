@@ -22,60 +22,88 @@ public class Rover
         extractCommandsToExecute(commands)
                 .forEach(this::executeCommand);
     }
-    
+
+    abstract class Command
+    {
+        protected Compass compass;
+
+        abstract public String execute();
+
+        public Command(Compass compass)
+        {
+            this.compass = compass;
+        }
+    }
+
+    class TurnLeft extends Command
+    {
+        public TurnLeft(Compass compass)
+        {
+            super(compass);
+        }
+
+        public String execute()
+        {
+            String orientation = compass.orientation();
+
+            switch (orientation)
+            {
+                case "N":
+                    return "W";
+                case "E":
+                    return "N";
+                case "S":
+                    return "E";
+                case "W":
+                    return "S";
+            }
+
+            return orientation;
+        }
+    }
+
+    class TurnRight extends Command
+    {
+        public TurnRight(Compass compass)
+        {
+            super(compass);
+        }
+
+        public String execute()
+        {
+            String orientation = compass.orientation();
+
+            switch (orientation)
+            {
+                case "N":
+                    return "E";
+                case "E":
+                    return "S";
+                case "S":
+                    return "W";
+                case "W":
+                    return "N";
+            }
+
+            return orientation;
+        }
+    }
+
     private void executeCommand(String command)
     {
         String orientation = compass.orientation();
 
         if (command.equals("L"))
         {
-            orientation = turnLeft();
+            orientation = new TurnLeft(compass).execute();
         }
 
         if (command.equals("R"))
         {
-            orientation = turnRight();
+            orientation = new TurnRight(compass).execute();
         }
 
         compass.changeDirection(orientation);
-    }
-
-    private String turnRight()
-    {
-        String orientation = compass.orientation();
-
-        switch (orientation)
-        {
-            case "N":
-                return "E";
-            case "E":
-                return "S";
-            case "S":
-                return "W";
-            case "W":
-                return "N";
-        }
-
-        return orientation;
-    }
-
-    private String turnLeft()
-    {
-        String orientation = compass.orientation();
-
-        switch (orientation)
-        {
-            case "N":
-                return "W";
-           case "E":
-                return "N";
-            case "S":
-                return "E";
-            case "W":
-                return "S";
-        }
-
-        return orientation;
     }
 
     private List<String> extractCommandsToExecute(String commands)
