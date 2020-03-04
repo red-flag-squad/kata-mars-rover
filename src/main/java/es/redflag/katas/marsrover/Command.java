@@ -1,13 +1,13 @@
 package es.redflag.katas.marsrover;
 
 abstract class Command
+{
+    protected String orientation;
+
+    abstract public String execute();
+
+    public Command(String orientation)
     {
-        protected Compass compass;
-
-        abstract public String execute();
-
-        public Command(Compass compass)
-        {
-            this.compass = compass;
-        }
+        this.orientation = orientation;
     }
+}

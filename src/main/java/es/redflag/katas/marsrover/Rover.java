@@ -26,16 +26,18 @@ public class Rover
 
     private Command fromInputToCommand(String input)
     {
-        Command command = new Nop(compass);
+        String orientation = compass.orientation();
+
+        Command command = new Nop(orientation);
 
         if (input.equals("L"))
         {
-            command = new TurnLeft(compass);
+            command = new TurnLeft(orientation);
         }
 
         if (input.equals("R"))
         {
-            command = new TurnRight(compass);
+            command = new TurnRight(orientation);
         }
 
         return command;
