@@ -19,104 +19,32 @@ public class Rover
 
     public void execute(String commands)
     {
-        extractCommandsToExecute(commands)
+        extractCommandsToExecute(commands).stream()
+                .map(this::fromInputToCommand)
                 .forEach(this::executeCommand);
     }
 
-    abstract class Command
-    {
-        protected Compass compass;
-
-        abstract public String execute();
-
-        public Command(Compass compass)
-        {
-            this.compass = compass;
-        }
-    }
-
-    class TurnLeft extends Command
-    {
-        public TurnLeft(Compass compass)
-        {
-            super(compass);
-        }
-
-        public String execute()
-        {
-            String orientation = compass.orientation();
-
-            switch (orientation)
-            {
-                case "N":
-                    return "W";
-                case "E":
-                    return "N";
-                case "S":
-                    return "E";
-                case "W":
-                    return "S";
-            }
-
-            return orientation;
-        }
-    }
-
-    class Nop extends Command
-    {
-        public Nop(Compass compass)
-        {
-            super(compass);
-        }
-
-        public String execute()
-        {
-            return compass.orientation();
-        }
-    }
-
-    class TurnRight extends Command
-    {
-        public TurnRight(Compass compass)
-        {
-            super(compass);
-        }
-
-        public String execute()
-        {
-            String orientation = compass.orientation();
-
-            switch (orientation)
-            {
-                case "N":
-                    return "E";
-                case "E":
-                    return "S";
-                case "S":
-                    return "W";
-                case "W":
-                    return "N";
-            }
-
-            return orientation;
-        }
-    }
-
-    private void executeCommand(String command)
+    private Command fromInputToCommand(String input)
     {
         Command operation = new Nop(compass);
 
-        if (command.equals("L"))
+        if (input.equals("L"))
         {
             operation = new TurnLeft(compass);
         }
 
-        if (command.equals("R"))
+        if (input.equals("R"))
         {
             operation = new TurnRight(compass);
         }
 
-        compass.changeDirection(operation.execute());
+        return operation;
+    }
+
+    private void executeCommand(Command command)
+    {
+        String orientation = command.execute();
+        compass.changeDirection(orientation);
     }
 
     private List<String> extractCommandsToExecute(String commands)
