@@ -1,7 +1,5 @@
 package es.redflag.katas.marsrover;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -23,7 +21,7 @@ public class MarsRoverTest
     public void commandLTurnsLeft() throws Exception
     {
         rover = new Rover();
-        rover.executeOrder("L");
+        rover.execute("L");
         assertThat(rover.orientation(), is(equalTo("W")));
     }
 
@@ -31,7 +29,7 @@ public class MarsRoverTest
     public void commandRTurnsRight() throws Exception
     {
         rover = new Rover();
-        rover.executeOrder("R");
+        rover.execute("R");
         assertThat(rover.orientation(), is(equalTo("E")));
     }
 
@@ -39,7 +37,7 @@ public class MarsRoverTest
     public void canExecuteMultipleCommands() throws Exception
     {
         rover = new Rover();
-        rover.executeOrder("RRLLLL");
+        rover.execute("RRLLLL");
         assertThat(rover.orientation(), is(equalTo("S")));
     }
 }

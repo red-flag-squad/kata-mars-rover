@@ -1,6 +1,7 @@
 package es.redflag.katas.marsrover;
 
-public class Rover {
+import java.util.Arrays;
+import java.util.List;
 
     private Compass compass;
 
