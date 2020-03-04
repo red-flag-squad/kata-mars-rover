@@ -22,60 +22,60 @@ public class Rover
         extractCommandsToExecute(commands)
                 .forEach(this::executeCommand);
     }
-
+    
     private void executeCommand(String command)
     {
+        String orientation = compass.orientation();
+
         if (command.equals("L"))
         {
-            turnLeft();
+            orientation = turnLeft();
         }
-        
+
         if (command.equals("R"))
         {
-            turnRight();
+            orientation = turnRight();
         }
+
+        compass.changeDirection(orientation);
     }
 
-    private void turnRight()
+    private String turnRight()
     {
         String orientation = compass.orientation();
 
         switch (orientation)
         {
             case "N":
-                compass.changeDirection("E");
-                break;
+                return "E";
             case "E":
-                compass.changeDirection("S");
-                break;
+                return "S";
             case "S":
-                compass.changeDirection("W");
-                break;
+                return "W";
             case "W":
-                compass.changeDirection("N");
-                break;
+                return "N";
         }
+
+        return orientation;
     }
 
-    private void turnLeft()
+    private String turnLeft()
     {
         String orientation = compass.orientation();
 
         switch (orientation)
         {
             case "N":
-                compass.changeDirection("W");
-                break;
-            case "E":
-                compass.changeDirection("N");
-                break;
+                return "W";
+           case "E":
+                return "N";
             case "S":
-                compass.changeDirection("E");
-                break;
+                return "E";
             case "W":
-                compass.changeDirection("S");
-                break;
+                return "S";
         }
+
+        return orientation;
     }
 
     private List<String> extractCommandsToExecute(String commands)
