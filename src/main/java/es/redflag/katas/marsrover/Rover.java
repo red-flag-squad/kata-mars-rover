@@ -62,6 +62,19 @@ public class Rover
         }
     }
 
+    class Nop extends Command
+    {
+        public Nop(Compass compass)
+        {
+            super(compass);
+        }
+
+        public String execute()
+        {
+            return compass.orientation();
+        }
+    }
+
     class TurnRight extends Command
     {
         public TurnRight(Compass compass)
@@ -91,19 +104,19 @@ public class Rover
 
     private void executeCommand(String command)
     {
-        String orientation = compass.orientation();
+        Command operation = new Nop(compass);
 
         if (command.equals("L"))
         {
-            orientation = new TurnLeft(compass).execute();
+            operation = new TurnLeft(compass);
         }
 
         if (command.equals("R"))
         {
-            orientation = new TurnRight(compass).execute();
+            operation = new TurnRight(compass);
         }
 
-        compass.changeDirection(orientation);
+        compass.changeDirection(operation.execute());
     }
 
     private List<String> extractCommandsToExecute(String commands)
