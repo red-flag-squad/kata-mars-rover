@@ -17,9 +17,9 @@ public class Rover
         return compass.orientation();
     }
 
-    public void execute(String commands)
+    public void execute(String input)
     {
-        extractCommandsToExecute(commands).stream()
+        extractCommandsFromInput(input).stream()
                 .map(this::fromInputToCommand)
                 .forEach(this::executeCommand);
     }
@@ -47,7 +47,7 @@ public class Rover
         compass.changeDirection(orientation);
     }
 
-    private List<String> extractCommandsToExecute(String commands)
+    private List<String> extractCommandsFromInput(String commands)
     {
         return Arrays.asList(commands.split(""));
     }
