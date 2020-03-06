@@ -28,7 +28,7 @@ public class Rover
     {
         String orientation = compass.orientation();
 
-        Command command = new Nop(orientation);
+        Command command = new Stay(orientation);
 
         if (input.equals("L"))
         {

@@ -1,8 +1,8 @@
 package es.redflag.katas.marsrover;
 
-class Nop extends Command
+class Stay extends Command
 {
-    public Nop(String orientation)
+    public Stay(String orientation)
     {
         super(orientation);
     }
